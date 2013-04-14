@@ -1,8 +1,10 @@
 -module(gravity).
 -export([gravity/2]).
 
-gravity({MassA, PositionA}, {MassB, PositionB}) -> 
-	io:format("~p, ~p~n", [MassA, MassB]),
-	io:format("~p, ~p~n", [PositionA, PositionB]),
-	{Force, Direction}
+% calculate resulting force vector between two bodies
+gravity({A_mass, A_position}, {B_mass, B_position}) -> 
+	% F = G(m1 * m2) / d^2
+	%io:format("~p, ~p~n", [A_mass, B_mass]),
+	%io:format("~p, ~p~n", [A_position, B_position]),
+	[ 0, 0 ]
 .
