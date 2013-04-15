@@ -1,5 +1,6 @@
 -module(body).
 -import(gravity).
+-import(sum_forces).
 -export([body/3]).
 
 % receive peer list and start simulation
@@ -22,13 +23,17 @@ tick(Tick, Bodies, Mass, Position) ->
 	% !! FORCES BETWEEN BODY1 AND BODY2 ARE ACTUALLY THE SAME.. MAYBE OPTIMIZE THIS OUT %
 
 	% sum resultant forces
-	io:format("Forces: ~p~n", [Forces]),
+	%io:format("Forces: ~p~n", [Forces]),
+	Resultant = sum_forces:sum_forces(Forces),
+	%io:format("Resultant: ~p~n", [Resultant]),
 
 	% move
+	New_position = lists:zipwith(fun(A, B) -> A + B end, Position, Resultant),
 
 	% send new position to mother process
-	io:format("Round: ~p, Mass: ~p, Position: ~p~n", [Tick, Mass, Position]),
+	io:format("Old position: ~p~n", [Position]),
+	io:format("Round: ~p, Mass: ~p, Position: ~p~n", [Tick, Mass, New_position]),
 
 	% next tick
-	tick(Tick - 1, Bodies, Mass, Position)
+	tick(Tick - 1, Bodies, Mass, New_position)
 .
