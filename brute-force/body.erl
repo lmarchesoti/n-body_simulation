@@ -22,18 +22,12 @@ tick(Tick, Bodies, Mass, Position) ->
 
 	% !! FORCES BETWEEN BODY1 AND BODY2 ARE ACTUALLY THE SAME.. MAYBE OPTIMIZE THIS OUT %
 
-	% sum resultant forces
-	%io:format("Forces: ~p~n", [Forces]),
-	Resultant = sum_forces:sum_forces(Forces),
-	%io:format("Resultant: ~p~n", [Resultant]),
+	Resultant = sum_forces:sum_forces(Forces), % sum resultant forces
 
-	% move
-	New_position = lists:zipwith(fun(A, B) -> A + B end, Position, Resultant),
+	New_position = lists:zipwith(fun(A, B) -> A + B end, Position, Resultant), % move
 
 	% send new position to mother process
-	io:format("Old position: ~p~n", [Position]),
 	io:format("Round: ~p, Mass: ~p, Position: ~p~n", [Tick, Mass, New_position]),
 
-	% next tick
-	tick(Tick - 1, Bodies, Mass, New_position)
+	tick(Tick - 1, Bodies, Mass, New_position) % next tick
 .
